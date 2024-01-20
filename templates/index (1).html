@@ -5,23 +5,20 @@
   <title>EcoIntelli - A hope for future</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+    <!-- partial:index.partial.html -->
+    <!--FONT AWESOME-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+    <!--ICONIFY-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
+    <!--PLUGIN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-<!-- partial:index.partial.html -->
-<!--FONT AWESOME-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-<!--ICONIFY-->
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-<!--PLUGIN-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-<!--GOOGLE FONTS-->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
+    <!--GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
 
   <!-- Links for adding twitter icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -38,9 +35,13 @@
     <h1 class="medium logo">EcolntelliSense</h1>
     <ul class="nav_links flex">
         <li><a href="#" class="active"><b>About Us</b><iconify-icon icon="material-symbols:home-outline"></iconify-icon></a></li>
+        {% if session %}
+        <li><a href="/logout"><b>Log Out</b><iconify-icon icon="tdesign:call-1"></iconify-icon></a></li>
+        {% else %}
         <li><a href="#"><b>Sign Up</b><iconify-icon icon="tdesign:call-1"></iconify-icon></a></li>
         <li><a href="/login"><b>Login</b><iconify-icon icon="mdi:about-circle-outline"></iconify-icon></a></li>
         <li>
+        {% endif %}
         </li>
     </ul>
 </nav>

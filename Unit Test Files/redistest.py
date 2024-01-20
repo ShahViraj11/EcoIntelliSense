@@ -29,6 +29,16 @@ def get_project_info(user_id, project_name):
 
     return project_info
 
+def get_project_names(user_id):
+    # Get all project names for the user from Redis
+    project_names = r.hkeys(f'user:{user_id}:projects')
+    
+    # Convert byte strings to regular strings
+    project_names = [name.decode('utf-8') for name in project_names]
+    
+    return project_names
+
+
 # Example usage:
 user_id = "123"
 project_name1 = "project1"
@@ -38,8 +48,8 @@ project_name2 = "project2"
 project_info2 = {"description": "This is project 2", "status": "completed"}
 
 # Add projects for a user
-add_project(user_id, project_name1, project_info1)
-add_project(user_id, project_name2, project_info2)
+# add_project(user_id, project_name1, project_info1)
+# add_project(user_id, project_name2, project_info2)
 
 # Retrieve project information
 retrieved_info1 = get_project_info(user_id, project_name1)
@@ -47,3 +57,13 @@ retrieved_info2 = get_project_info(user_id, project_name2)
 
 print("Retrieved Project 1 Info:", retrieved_info1)
 print("Retrieved Project 2 Info:", retrieved_info2)
+
+
+# Example usage:
+user_id = "123"
+
+# Get the list of project names for the user
+project_names = get_project_names(user_id)
+
+# Print the list of project names
+print("List of Project Names for User {}: {}".format(user_id, project_names))

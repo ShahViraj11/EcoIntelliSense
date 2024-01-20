@@ -6,6 +6,44 @@ from flask import Flask, redirect, render_template, session, url_for
 
 import apikeys
 
+import redis
+from redis.commands.json.path import Path
+import redis.commands.search.aggregation as aggregations
+import redis.commands.search.reducers as reducers
+from redis.commands.search.field import TextField, NumericField, TagField
+from redis.commands.search.indexDefinition import IndexDefinition, IndexType
+from redis.commands.search.query import NumericFilter, Query
+
+r = redis.StrictRedis(
+  host='redis-19241.c1.us-central1-2.gce.cloud.redislabs.com',
+  port=19241,
+  password=apikeys.redis_password,)
+
+def add_project(user_id, project_name, project_info):
+    # Convert project_info to JSON for storage
+    project_info_json = json.dumps(project_info)
+
+    # Set the project information in Redis
+    r.hset(f'user:{user_id}:projects', project_name, project_info_json)
+
+def get_project_info(user_id, project_name):
+    # Get the project information from Redis
+    project_info_json = r.hget(f'user:{user_id}:projects', project_name)
+
+    # Convert JSON back to Python dictionary
+    project_info = json.loads(project_info_json) if project_info_json else None
+
+    return project_info
+
+def get_project_names(user_id):
+    # Get all project names for the user from Redis
+    project_names = r.hkeys(f'user:{user_id}:projects')
+    
+    # Convert byte strings to regular strings
+    project_names = [name.decode('utf-8') for name in project_names]
+    
+    return project_names
+
 
 app = Flask(__name__)
 app.secret_key = apikeys.autho_client_secret
@@ -23,17 +61,49 @@ oauth.register(
 
 @app.route('/')
 def hello():
-    return render_template('index (1).html')
+    return render_template('index (1).html',
+                           session=session.get("user"), 
+                           pretty=json.dumps(session.get("user"), indent=4))
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    return redirect("/")
+    return redirect("/projects")
+
+@app.route("/projects", methods=["GET", "POST"])
+def projects():
+    get_project_names(session.get("user"))
+    return render_template('currentprojects.html',
+                    session=session.get("user"),
+                    pretty=json.dumps(session.get("user"), indent=4))
+
+@app.route("/newproject", methods=["GET", "POST"])
+def newproject():
+    return render_template('2ndpage.html',
+                    session=session.get("user"),
+                    pretty=json.dumps(session.get("user"), indent=4))
+
 
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(redirect_uri=url_for("callback", _external=True))
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(
+        "https://"
+        + apikeys.autho_domain
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": url_for("hello", _external=True),
+                "client_id": apikeys.autho_client_id,
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 if __name__ == '__main__':
     app.run()
