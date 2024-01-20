@@ -29,32 +29,7 @@ def get_solar_insights(api_key, latitude, longitude):
     # https://developers.google.com/maps/documentation/solar/building-insights#example_response_object
     data = response.json()
 
-    solar_analysis_data = {}
-
-    # Solar Potential
-    solar_analysis_data['max_sunshine_hours_per_year'] = data['solarPotential']['maxSunshineHoursPerYear']
-    solar_analysis_data['solar_panel_configs'] = data['solarPotential']['solarPanelConfigs']
-
-    # Roof and Building Statistics
-    solar_analysis_data['whole_roof_stats'] = data['solarPotential']['wholeRoofStats']
-    solar_analysis_data['building_stats'] = data['solarPotential']['buildingStats']
-
-    # Solar Panel Information
-    solar_analysis_data['panel_capacity_watts'] = data['panelCapacityWatts']
-    solar_analysis_data['panel_dimensions'] = {'height_meters': data['panelHeightMeters'], 'width_meters': data['panelWidthMeters']}
-    solar_analysis_data['panel_lifetime_years'] = data['panelLifetimeYears']
-
-    # Financial Analyses
-    solar_analysis_data['financial_analyses'] = data['financialAnalyses']
-
-    # Geographical Information
-    solar_analysis_data['center_coordinates'] = data['center']
-
-    # Imagery Information
-    solar_analysis_data['imagery_quality'] = data['imageryQuality']
-    solar_analysis_data['imagery_processed_date'] = data['imageryProcessedDate']
-
-    return solar_analysis_data
+    return data
 
 
 def pollution_data(api, latitude, longitude):  
