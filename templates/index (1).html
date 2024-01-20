@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoIntelli - A hope for the future</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- partial:index.partial.html -->
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <!-- ICONIFY -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <!-- PLUGIN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
+
+  <!-- Links for adding twitter icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Font awesome icons -->
+  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="flex">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+    <h1 class="medium logo">EcolntelliSense</h1>
+    <ul class="nav_links flex">
+      <li><a href="#" class="active"><b>About Us</b><iconify-icon icon="material-symbols:home-outline"></iconify-icon></a></li>
+      <li><a href="#"><b>Sign Up</b><iconify-icon icon="tdesign:call-1"></iconify-icon></a></li>
+      <li><a href="#"><b>Login</b><iconify-icon icon="mdi:about-circle-outline"></iconify-icon></a></li>
+      <li>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <figure class="carousel">
+      <img src="{{ url_for('static', filename='images/slideshow/slide1.jpg') }}" alt="" class="blizer" />
+      <div class="centered">EcoIntelliSense</div>
+      <div class="para">AI-Driven Environmental Impact Analyzer</div>
+      <p> < AI-Driven Environmental Impact Analyzer </p>
+    </figure>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <!-- DIVISION_1 -->
+    <div class="divisions division_1">
+      <article class="padding_3x">
+        <h1 class="title medium">Eco. Intelli. Sense.</h1>
+        <p> A forward-thinking, Balearic-based residential real estate developer operating in prime locations across the
+          islands of Mallorca and Ibiza. Committed to driving progress and commercial success, we focus on delivering
+          results via meticulous development strategies that maximize each project's potential.</p>
+      </article>
+    </div>
+
+    <!-- DIVISION_2 -->
+    <div class="divisions division_2 padding_2x">
+      <section class="title_header padding_1x">
+        <h1 class="title medium">Whether you're interested</h1>
+        <span class="bar"></span>
+      </section>
+      <section class="cards flex padding_1x">
+        <article class="fixed_flex card padding_1x">
+          <iconify-icon icon="la:donate"></iconify-icon>
+          <h3 class="small">INVEST WITH US</h3>
+        </article>
+        <!-- More card articles... -->
+      </section>
+    </div>
+
+    <!-- Feature Boxes... -->
+
+    <!-- Environmentalist -->
+    <section id="testimonial">
+      <!-- Heading -->
+      <div class="title-text">
+        <p>Top Environmentalists</p>
+        <h1>What Environmentalists say! </h1>
+      </div>
+
+      <div class="testimonial-row">
+        <div class="testimonial-col">
+          <div class="user">
+            <img src="{{ url_for('static', filename='images/environmentalist1.jpeg') }}" alt="">
+            <!-- More user content... -->
+          </div>
+          <p>“The environment is where we all meet; where we all have a mutual interest; it is the one thing all of us
+            share.” <br> <br> -Lady Bird Johnson</p>
+        </div>
+        <!-- More testimonial-cols... -->
+      </div>
+    </section>
+
+    <!-- DIVISION_3 -->
+    <div class="divisions division_3 flex">
+      <section class="flex_content">
+        <iframe frameborder="0"
+          src=r"https://www.google.com/maps/embed/v1/place?q=New+York,+NY,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8">
+        </iframe>
+      </section>
+      <!-- More content... -->
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="flex padding_2x">
+    <h1 class="medium logo title">Make this world a <em>Better Place</em>.</h1>
+    <ul class="flex links padding_2x">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Contact us</a></li>
+      <li><a href="#">About us</a></li>
+      <li><a href="#">Privacy policy</a></li>
+    </ul>
+    <hr></hr>
+    <aside class="sub_footer flex">
+      <p>Made by Viraj, Amrit, Sid, and Lance @ Boilermake XI 2024</p>
+    </aside>
+  </footer>
+
+  <!-- partial -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
