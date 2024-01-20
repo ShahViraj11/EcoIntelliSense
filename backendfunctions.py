@@ -6,7 +6,7 @@ import apikeys
 
 def check_mountainous_region(api_key, latitude, longitude):
     """Checks if a region is mountainous based on elevation data."""
-
+    
     endpoint = "https://maps.googleapis.com/maps/api/elevation/json"
     params = {
         'locations': f'{latitude},{longitude}',
@@ -17,10 +17,10 @@ def check_mountainous_region(api_key, latitude, longitude):
     data = response.json()
 
     if response.status_code == 200 and 'results' in data:
-        elevation = data['results'][0]['elevation']
-        return elevation  # Return only the elevation value
+        return data['results'][0]['elevation']
     else:
-        return None  # Return None to indicate error or missing data
+        return None
+
 
 def get_solar_insights(api_key, latitude, longitude):
     endpoint = f"https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude={latitude}&location.longitude={longitude}&requiredQuality=HIGH&key={api_key}"
