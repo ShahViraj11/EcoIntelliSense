@@ -31,3 +31,79 @@ def average_temp_and_wind(lat,lon,start_month,end_month):
     average_wind_speed = sum(wind_data)/len(wind_data)
 
     return average_temp,average_wind_speed
+
+def query_1build_construction_costs(api_key,lat,lng):
+    url = "https://gateway-external.1build.com/"
+    headers = {
+        "Content-Type": "application/json",
+        "1build-api-key": api_key
+    }
+
+    queries = {
+        "labor": {
+            "searchTerm": "construction labor",
+            "fields": "name burdenedLaborRateUsdCents"
+        },
+        "concrete": {
+            "searchTerm": "concrete",
+            "fields": "name materialRateUsdCents"
+        },
+        "site_preparation": {
+            "searchTerm": "site preparation",
+            "fields": "name calculatedUnitRateUsdCents"
+        },
+        "finishing_materials": {
+            "searchTerm": "finishing materials",
+            "fields": "name calculatedUnitRateUsdCents"
+        }
+    }
+
+    results = {}
+
+    for key, value in queries.items():
+        graphql_query = """
+        query sources($input: SourceSearchInput!) {
+            sources(input: $input) {
+                nodes {
+                    %s
+                }
+            }
+        }
+        """ % value["fields"]
+
+        variables = {
+            "input": {
+                "coordinate": {"lng": lng, "lat": lat},
+                "searchTerm": value["searchTerm"],
+                "page": {"limit": 3}
+            }
+        }
+
+        response = requests.post(url, headers=headers, json={"query": graphql_query, "variables": variables})
+
+        total_cost_cents = 0
+
+        if response.status_code == 200:
+            nodes = response.json()['data']['sources']['nodes']
+
+            for node in nodes:
+                if 'burdenedLaborRateUsdCents' in node:
+                    total_cost_cents += node['burdenedLaborRateUsdCents']
+                    uom = "$ per Hour"
+                elif 'materialRateUsdCents' in node:
+                    total_cost_cents += node['materialRateUsdCents']
+                    uom = "$ per Cubic Yard"
+                    break
+                elif 'calculatedUnitRateUsdCents' in node:
+                    total_cost_cents += node['calculatedUnitRateUsdCents']
+                    uom = "$ per Square Foot"
+
+            if total_cost_cents == 0:
+                continue
+            results[key] = str(total_cost_cents / 100) + uom  # Convert to dollars
+        else:
+            results[key] = f"Error: {response.status_code}, {response.text}"
+
+    return results
+
+print(query_1build_construction_costs('1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU',42.73,-84.48))
