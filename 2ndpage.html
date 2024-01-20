@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Other head elements -->
+  <meta charset="UTF-8">
+  <title>Environmental Impact Assessment Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./2nd_page_style.css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg&libraries=places&callback=initMap" async defer></script>
+  <style>
+    .wide-input {
+      width: 100%; /* This will make the input fields take the full width of their container */
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+<!-- Other body content -->
+<div class="header">
+  <img src="/images/logo.png" alt="Logo" class="logo">
+  <span class="logo-text">EcoIntelliSense</span>
+</div>
+
+<div class="container">
+  <h1>Submit your project</h1>
+  <form>
+    <div class="form-group">
+      <label for="project-name">Project Name:</label>
+      <input id="project-name" type="text" required autofocus placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label for="company-name">Company Name:</label>
+      <input id="company-name" type="text" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label for="project-location">Project Location:</label>
+      <input id="project-location" type="text" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label for="project-size">Project Size (sq meters):</label>
+      <input id="project-size" type="number" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label>Type of Construction:</label>
+      <input type="text" value="Residential" readonly style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label>Sustainable Materials Used:</label>
+      <textarea rows="3" placeholder="e.g., Recycled Steel, Bamboo, Reclaimed Wood, Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Primary Energy Source:</label>
+      <input type="text" value="Traditional" readonly style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label for="water-usage">Estimated Water Usage (liters):</label>
+      <input id="water-usage" type="number" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+    </div>
+
+    <div class="form-group">
+      <label for="waste-plan">Waste Management Plan:</label>
+      <textarea id="waste-plan" rows="3" placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"></textarea>
+    </div>
+
+    <button type="submit">Submit Assessment</button>
+
+    <div class="form-group">
+      <label for="map">Select Project Area:</label>
+      <div id="map" style="height: 400px;"></div>
+    </div>
+
+    <!-- Rest of your form fields -->
+  </form>
+</div>
+
+<script>
+  let map;
+  let markers = [];
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+    });
+
+    map.addListener("click", (event) => {
+      addMarker(event.latLng);
+    });
+
+    map.addListener("rightclick", () => {
+      if (markers.length === 4) {
+        calculateArea();
+      }
+    });
+  }
+
+  function addMarker(location) {
+    markers.push(location);
+
+    const marker = new google.maps.Marker({
+      position: location,
+      map: map,
+    });
+
+    if (markers.length > 4) {
+      markers.shift().setMap(null);
+      markers.pop().setMap(null);
+      markers.shift().setMap(null);
+      markers.pop().setMap(null);
+    }
+  }
+
+  function calculateArea() {
+    const bounds = new google.maps.LatLngBounds();
+    markers.forEach((marker) => bounds.extend(marker));
+    map.fitBounds(bounds);
+
+    const path = new google.maps.MVCArray(markers.map((marker) => new google.maps.LatLng(marker.lat(), marker.lng())));
+    const polygon = new google.maps.Polygon({ paths: path });
+
+    const area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+    document.getElementById('project-size').value = (area * 1000).toFixed(2);
+  }
+</script>
+
+<div class="title-text" style="display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center;">
+  <div>
+    <h5>Made by Viraj, Amrit, Sid, and Lance</h5>
+    <h5>@ Boilermake XI 2024</h5>
+  </div>
+</div>
+
+</body>
+</html>
