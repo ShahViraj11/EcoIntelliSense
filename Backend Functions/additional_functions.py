@@ -106,4 +106,3 @@ def query_1build_construction_costs(api_key,lat,lng):
 
     return results
 
-print(query_1build_construction_costs('1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU',42.73,-84.48))
