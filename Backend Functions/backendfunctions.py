@@ -114,13 +114,12 @@ api_key = apikeys.google_maps_api_key
 
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
-'''
+
 solar_data = get_solar_insights(api_key, latitude, longitude)
 print(solar_data)
 
 pollution_data = pollution_data(api_key, latitude, longitude)
 print(pollution_data)
-'''
 
 
 
