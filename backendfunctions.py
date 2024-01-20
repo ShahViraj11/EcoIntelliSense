@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+import apikeys
 
 def check_mountainous_region(api_key, latitude, longitude):
     """Checks if a region is mountainous based on elevation data."""
@@ -133,12 +134,12 @@ def water_check(original_lat, original_lon):
 
 latitude = 37.7749
 longitude = -122.4194
-api_key = ''
+api_key = apikeys.google_maps_api_key
 
-'''
+
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
-
+'''
 solar_data = get_solar_insights(api_key, latitude, longitude)
 print(solar_data)
 
