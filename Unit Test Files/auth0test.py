@@ -23,9 +23,6 @@ oauth.register(
     server_metadata_url=f'https://{apikeys.autho_domain}/.well-known/openid-configuration',
 )
 
-
-
-
 # Controllers API
 @app.route("/")
 def home():
@@ -45,9 +42,7 @@ def callback():
 
 @app.route("/login")
 def login():
-    return oauth.auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True)
-    )
+    return oauth.auth0.authorize_redirect(redirect_uri=url_for("callback", _external=True))
 
 
 @app.route("/logout")
