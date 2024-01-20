@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps Area Finder</title>
+    <style>
+        #map {
+          height: 100%;
+        }
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        #calculate-area-button {
+          position: absolute;
+          z-index: 1000;
+        }
+      </style>
+  </head>
+  <body>
+    <button id="calculate-area-button">Calculate Area</button>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key={KEY}&libraries=places&callback=initMap" async defer></script>
+
+    <script>
+        let map;
+        let markers = [];
+      
+        function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8,
+          });
+      
+          map.addListener("click", (event) => {
+            addMarker(event.latLng);
+          });
+      
+          map.addListener("rightclick", () => {
+            if (markers.length === 4) {
+              calculateArea();
+            }
+          });
+        }
+      
+        function addMarker(location) {
+          markers.push(location);
+      
+          const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+          });
+      
+          if (markers.length > 4) {
+            markers.shift().setMap(null);
+            markers.pop().setMap(null);
+            markers.shift().setMap(null);
+            markers.pop().setMap(null);
+          }
+        }
+      
+        function calculateArea() {
+          const bounds = new google.maps.LatLngBounds();
+          markers.forEach((marker) => bounds.extend(marker));
+          map.fitBounds(bounds);
+      
+          const path = new google.maps.MVCArray(markers.map((marker) => new google.maps.LatLng(marker.lat(), marker.lng())));
+          const polygon = new google.maps.Polygon({ paths: path });
+      
+          const area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+          alert(`The area of the polygon is ${area.toFixed(2)} square kilometers.`);
+        }
+      </script>
+      
+      
+      
+
+  </body>
+</html>
