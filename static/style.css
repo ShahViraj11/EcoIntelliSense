@@ -250,7 +250,7 @@ li{
 }
 
 .link-tag:hover{
-    color:var(--primary);
+    color:var(--dark);
 }
 
 .buttons{
@@ -268,7 +268,7 @@ li{
 }
 
 .btn_1{
-    background-color:var(--primary);
+    background-color:var(--dark);
     color:var(--white);
 }
 
@@ -279,30 +279,30 @@ li{
 .btn_2{
     background-color:transparent;
     color:var(--white);
-    border:1px solid var(--primary);
+    border:1px solid var(--dark);
 }
 
 .btn_2:hover{
-    background-color:var(--primary);
+    background-color:var(--dark);
 }
 
 @media (max-width:1000px){
      .big{
         font-size:1.6em;
     }
-    
+
     .medium{
         font-size:1.3em;
     }
-    
+
     .small{
         font-size:1em;
     }
-    
+
     .btn{
         padding:0.5rem 1rem;
     }
-    
+
     a, p, .btn{
         font-size:12px;
     }
@@ -316,12 +316,12 @@ li{
     .padding_1x, .padding_2x, .padding_3x, .padding_4x{
         padding:1rem;
     }
-    
+
     .btn_3:before{
         width:40px;
         height:40px;
     }
-    
+
     .title_header{
         width:100%;
     }
@@ -459,7 +459,7 @@ footer .links{
     align-items:center;
     justify-content:center;
 
-}   
+}
 
 footer .links li{
     margin:0 1.5rem;
@@ -592,10 +592,10 @@ ol li, ul li{
     header{
         height:60vh;
     }
-    
+
     .carousel_count{
-        bottom:0rem;   
-        left:-1rem;     
+        bottom:0rem;
+        left:-1rem;
         font-size:12px;
     }
 }
@@ -609,6 +609,10 @@ ol li, ul li{
 .division_1{
     background-color:#006400;
     color:var(--white);
+}
+
+.division_1 p {
+    font-size: 18px;
 }
 
 
@@ -651,7 +655,7 @@ ol li, ul li{
 
 .card:hover img{
     filter:brightness(0) invert(1);
-}   
+}
 
 @media (max-width:620px){
     .card{
@@ -732,7 +736,7 @@ form{
 form .title_header{
     width:100%;
     text-align:left;
-}   
+}
 
 form .title_header .title{
     margin:0;
@@ -767,7 +771,7 @@ form aside:last-child{
 
 form textarea{
     height:100px;
-}   
+}
 
 
 
@@ -802,48 +806,6 @@ form textarea{
 
 
 
-
-/*Animated bar*/
-.bar{
-    display:block;
-    height: 5px;
-    width: 100px;
-    background: var(--lightblue);
-    position: relative;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 20px auto 20px 0;
-}
-
-.bar:before{
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 5px;
-    background: var(--white);
-    -webkit-animation-duration: 4s;
-    animation-duration: 4s;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-name: MOVE-BG;
-    animation-name: MOVE-BG;
-}
-
-@keyframes MOVE-BG{
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-    }
-    100% {
-        -webkit-transform: translateX(105px);
-        transform: translateX(105px);
-    }
-}
 
 
 /************************
@@ -916,3 +878,9 @@ testimonials
     color: #27c0ff;
 }
 
+h3.small {
+    font-size: 16px; /* Adjust the font size as needed */
+    color: #333; /* Adjust the text color as needed */
+    margin-bottom: 10px; /* Adjust the bottom margin as needed */
+    text-align: center;
+}
