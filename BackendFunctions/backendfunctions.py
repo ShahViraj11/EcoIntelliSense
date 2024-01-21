@@ -222,15 +222,39 @@ def geocode_address(address, api_key):
         print(f"Geocoding failed. Status: {result['status']}")
         return None
 
+def sustainability_score(latitude,longitude):
+    data = dict()
+    data['solar'] = 0
+    data['water_check'] = 0
+    data['pollution'] = 0
+    
+    score = 75
+    if data['solar']:
+        score += 25
+
+    if data['water_check']:
+        score -= 15
+
+    pollution_num = 50
+    while data['pollution'] > pollution_num:
+        score -= 2
+        pollution_num += 30
+    
+    return score
+# solar and water_check are boolean vals
+# pollution is average pollution over x amount of days
 
 
 
-'''
+
 latitude = 37.7749
 longitude = -122.4194
 api_key = apikeys.google_maps_api_key
 
+solar_data = get_solar_insights(api_key, latitude, longitude)
+print(solar_data)
 
+'''
 address_to_geocode = "1600 Amphitheatre Parkway, Mountain View, CA"
 coordinates = geocode_address(address_to_geocode, api_key)
 print(f"Coordinates for {address_to_geocode}: {coordinates}")
@@ -240,8 +264,7 @@ print(f"Coordinates for {address_to_geocode}: {coordinates}")
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
 
-solar_data = get_solar_insights(api_key, latitude, longitude)
-print(solar_data)
+
 
 pollution_data = pollution_data(api_key, latitude, longitude)
 print(pollution_data)
