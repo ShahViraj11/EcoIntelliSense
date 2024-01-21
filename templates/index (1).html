@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>EcoIntelli - A hope for future</title>
-  <link rel="stylesheet" href="./style.css">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 
 <!-- partial:index.partial.html -->
@@ -36,12 +35,16 @@
 
 <!--NAV-->
 <nav class="flex">
-    <img src="/images/logo.png" class="logo">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
         <h1 class="medium logo">EcolntelliSense</h1>
     <ul class="nav_links flex">
         <li><a href="#" class="active"><b>About Us</b><iconify-icon icon="material-symbols:home-outline"></iconify-icon></a></li>
+        {% if session %}
+        <li><a href="/logout"><b>Log Out</b><iconify-icon icon="tdesign:call-1"></iconify-icon></a></li>
+        {% else %}
+        <li><a href="/login"><b>Login</b><iconify-icon icon="mdi:about-circle-outline"></iconify-icon></a></li>        
         <li><a href="#"><b>Sign Up</b><iconify-icon icon="tdesign:call-1"></iconify-icon></a></li>
-        <li><a href="#"><b>Login</b><iconify-icon icon="mdi:about-circle-outline"></iconify-icon></a></li>
+        {% endif %}
         <li>
         </li>
     </ul>
@@ -51,17 +54,10 @@
 <header>
 
 
-
-
-
     <figure class="carousel">
-
-        <img src="/images/slideshow/slide1.jpg" alt="" class="blizer" />
-
-  <div class="centered">EcoIntelliSense</div>
+        <img src="{{ url_for('static', filename='images/slideshow/slide1.jpg') }}" alt="" class="blizer" />
+    <div class="centered">EcoIntelliSense</div>
         <div class="para">AI-Driven Environmental Impact Analyzer</div>
-
-
         <p> < AI-Driven Environmental Impact Analyzer </p>
     </figure>
 
@@ -127,7 +123,7 @@
             </div>
         </div>
         <div class="features-img">
-            <img src="/images/first.jpg" alt="Sustainable Construction">
+            <img src="{{ url_for('static', filename='images/first.jpg') }}" alt="Sustainable Construction">
         </div>
     </div>
 
@@ -143,7 +139,7 @@
             </div>
         </div>
         <div class="features-img">
-            <img src="/images/second.jpg" alt="Cost-Effective Solutions">
+            <img src="{{ url_for('static', filename='images/second.jpg') }}" alt="Cost-Effective Solutions">
         </div>
     </div>
 
@@ -159,7 +155,7 @@
             </div>
         </div>
         <div class="features-img">
-            <img src="/images/third.jpg" alt="Innovative Environmental Analysis">
+            <img src="{{ url_for('static', filename='images/third.jpg') }}" alt="Innovative Environmental Analysis">
         </div>
     </div>
 </section>
