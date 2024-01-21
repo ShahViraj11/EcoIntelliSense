@@ -48,26 +48,28 @@ h1 {
   font-size: 48px;
 }
 
-        button {
-            background-color: #008000; / Green background for the button /
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+button {
+    background-color: #008000; / Green background for the button /
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        button:hover {
-            background-color: #006400; / Darker green on hover */
-        }
+button:hover {
+    background-color: #006400; / Darker green on hover */
+}
 
-        ol {
-            padding-left: 20px;
-        }
+ol {
+    padding-left: 20px;
+}
 
-        li {
-            margin-bottom: 5px;
-          margin-left: 5px;
-          font-size: 22px;
-        }
+li {
+    margin-bottom: 5px;
+  margin-left: 5px;
+  font-size: 22px;
+}
+
+a { color: inherit; } 

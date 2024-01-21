@@ -2,83 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EcoIntelliSense Report</title>
+    <title>Title</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='ReportDraftStyle.css') }}">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        .header {
-            background: #f4f4f4;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .header img {
-            max-height: 50px;
-        }
-        .header h1 {
-            margin: 10px 0;
-        }
-        .row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .column {
-            flex: 1;
-            padding: 0 20px;
-        }
-        .energy-analysis {
-            margin-bottom: 20px;
-        }
-        .title-text {
-            text-align: center;
-            margin-top: 50px;
-        }
-        .unsafe-air-quality {
-            color: red;
-        }
-    </style>
 </head>
 <body>
 
 <div class="header">
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
-    <div class="logo-text">EcoIntelliSense</div>
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+    <span class="logo-text">EcoIntelliSense</span>
     <h1>Sustainability Dashboard</h1>
 </div>
 
 <div class="row">
-  <!-- Left Column -->
   <div class="column">
-      <h2>Project Overview</h2>
-      <p><b>Location:</b> {{ data['location'] }}</p>
-      <p><b>Near Water:</b> {{ 'Yes' if data['near_water'] else 'No' }}</p>
-      <h3>Labor and Cost</h3>
-      <ul>
-          {% for item, cost in data['labor_cost'].items() %}
-          <li>{{ item }}: {{ cost }}</li>
-          {% endfor %}
-      </ul>
+      <p><b><u>Location:</u></b> {{ data['location'] }}</p>
+      <p><b><u>Near Water:</u></b> {{ 'Yes' if data['near_water'] else 'No' }}</p>
+      <p><b><u>Labor and Cost:</u></b></p>
+      {% for item, cost in data['labor_cost'].items() %}
+      <li>{{ item }}: {{ cost }}</li>
+      {% endfor %}
   </div>
 
-  <!-- Right Column -->
-  <div class="column">
-      <h2>Site Details</h2>
-      <p><b>Area:</b> {{ data['area'] }} m<sup>2</sup></p>
-      <p><b>Elevation:</b> {{ data['elevation'] }} m</p>
-  </div>
+
+
+    <div class="column">
+      <p><b><u>Area:</u></b> {{ data['area'] }} m<sup>2</sup></p>
+      <p><b><u>Elevation:</u></b> {{ data['elevation'] }} m</p>
+      <p><b><u> Air Quality Index:</b></u>{{ data['air_quality_index'] }}</p>
+      <p><b><u>Sustainability Scale:</b></u>{{ data['sustainability_scale'] }}</p>
+    </div>
+
+</div>
+
+<!-- Warnings -->
+<div>
+<h2>Warnings</h2>
+<ul>
+    {% if data['near_water'] %}
+    <li>Water body nearby</li>
+    {% else %}
+    <li>No warnings detected</li>
+    {% endif %}
+</ul>
 </div>
 
 <!-- Map -->
 <div id="map" style="text-align: center;">
     <h2>Location Map</h2>
         <iframe
-        width="450"
+        width="900"
         height="250"
         frameborder="0"
         style="border:0"
@@ -91,14 +65,10 @@
         </iframe>
 </div>
 
-<!-- Sustainability Scale -->
-<div class="sustainability-scale">
-    <h2>Sustainability Scale</h2>
-    {{ data['sustainability_scale'] }}
-</div>
+
 
 <!-- Solar Energy Analysis -->
-<div class="energy-analysis" id="solar-energy-analysis">
+<div class="column" id="solar-energy-analysis">
     <h2>Solar Energy Analysis</h2>
     <div id="solar-graph"></div>
     <script>
@@ -117,7 +87,7 @@
 </div>
 
 <!-- Wind Energy Analysis -->
-<div class="energy-analysis" id="wind-energy-analysis">
+<div class="column" id="wind-energy-analysis">
     <h2>Wind Energy Analysis</h2>
     <div id="wind-graph"></div>
     <script>
@@ -158,38 +128,6 @@
         Plotly.newPlot('wind-graph', windData, windLayout, {displaylogo: false});
     </script>
 </div>
-
-<!-- Air Quality Index -->
-<div>
-    <h2>Air Quality Index</h2>
-    <p class="{{ 'unsafe-air-quality' if data['air_quality_index'] > 100 else '' }}">
-        {{ data['air_quality_index'] }}
-    </p>
-</div>
-
-<!-- Warnings -->
-<div>
-    <h2>Warnings</h2>
-    <ul>
-        {% if data['near_water'] %}
-        <li>Water body nearby</li>
-        {% else %}
-        <li>No warnings detected</li>
-        {% endif %}
-    </ul>
-</div>
-
-<!-- Footer -->
-<div class="title-text">
-    <div>
-        <h5>Made by Viraj, Amrit, Sid, and Lance</h5>
-        <h5>@ Boilermake XI 2024</h5>
-    </div>
-</div>
-
-<script>
-    // JavaScript for rendering graphs
-</script>
 
 </body>
 </html>
