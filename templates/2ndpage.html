@@ -54,21 +54,29 @@
 <script>
   let map;
   let markers = [];
+  let idleListener;
 
   function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: -34.397, lng: 150.644 },
       zoom: 8,
     });
-
+  
     map.addListener("click", (event) => {
-      addMarker(event.latLng);
-    });
-
-    map.addListener("rightclick", () => {
-      if (markers.length === 4) {
-        calculateArea();
+      if (markers.length < 4) {
+        addMarker(event.latLng);
       }
+    });
+  
+    // Use a timeout to ensure that the idle event is properly triggered
+    let idleTimeout;
+    map.addListener("idle", () => {
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        if (markers.length === 4) {
+          calculateArea();
+        }
+      }, 500); // Adjust the timeout duration as needed
     });
   }
 
@@ -80,11 +88,27 @@
       map: map,
     });
 
-    if (markers.length > 4) {
-      markers.shift().setMap(null);
-      markers.pop().setMap(null);
-      markers.shift().setMap(null);
-      markers.pop().setMap(null);
+    marker.addListener("click", () => {
+      removeMarker(marker);
+    });
+
+    if (markers.length === 4) {
+      google.maps.event.removeListener(idleListener);
+    }
+  }
+
+  function removeMarker(marker) {
+    const index = markers.indexOf(marker.getPosition());
+    markers.splice(index, 1);
+    marker.setMap(null);
+
+    // Re-add idle listener if markers are less than 4
+    if (markers.length < 4) {
+      idleListener = map.addListener("idle", () => {
+        if (markers.length === 4) {
+          calculateArea();
+        }
+      });
     }
   }
 
@@ -97,9 +121,12 @@
     const polygon = new google.maps.Polygon({ paths: path });
 
     const area = google.maps.geometry.spherical.computeArea(polygon.getPath());
-    document.getElementById('project-size').value = (area * 1000).toFixed(2);
+    document.getElementById('projectsize').value = (area * 1000).toFixed(2);
+    const projectSizeInput = document.getElementById('projectsize');
+    projectSizeInput.value = (area * 1000).toFixed(2);
   }
 </script>
+
 
 <div class="title-text" style="display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center;">
   <div>
