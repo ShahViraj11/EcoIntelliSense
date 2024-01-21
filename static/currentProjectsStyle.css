@@ -68,4 +68,13 @@ h1 {
 
         li {
             margin-bottom: 5px;
+          margin-left: 5px;
+          font-size: 22px;
         }
+
+        .data-item {
+    border: 2px solid #000; /* Border style, adjust color and width as needed */
+    padding-top: 5px; /* Adjust padding as needed */
+          padding-bottom: 5px;
+    display: inline-block; /* Ensure the rectangle only takes the width of the content */
+}
