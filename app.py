@@ -132,19 +132,23 @@ def report():
     db_data = get_project_info(session.get("user")["userinfo"]["email"], proj_name)
     
     data = dict()
+    data['name'] = proj_name
     data['location'] = db_data['project_street']
     data['coordinates'] = db_data['project_coordinates']
+    temp, data['wind'] = backendfunctions.average_temp_and_wind(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['near_water'] = backendfunctions.water_check(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['labor_cost'] = backendfunctions.query_1build_construction_costs(db_data['project_coordinates'][0], db_data['project_coordinates'][1])               
     data['area'] = db_data['project_size']
     data['elevation'] = round(backendfunctions.check_mountainous_region(db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
-    data['solar'],data['solar_uptime'] = backendfunctions.solar_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
+    data['solar'] = backendfunctions.solar_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['sustainability_scale'] = backendfunctions.sustainability_score(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     pollution_data = backendfunctions.pollution_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     sum = 0
     for i in range(len(pollution_data)):
         sum += pollution_data[i]['hoursInfo'][0]['indexes'][0]['aqi']
     data['air_quality_index'] = round(sum/len(pollution_data),2)
+    
+    print(data['wind'])
     
     return render_template('ReportDraft.html', data=data)
 

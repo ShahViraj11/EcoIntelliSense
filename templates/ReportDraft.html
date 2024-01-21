@@ -33,25 +33,99 @@
 </div>
 
 
+<div id="map">
+    <iframe
+    width="450"
+    height="250"
+    frameborder="0"
+    style="border:0"
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps/embed/v1/view?key=AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg
+    &center={{ data['coordinates'][0] }},{{ data['coordinates'][1] }}
+    &zoom=15
+    &maptype=roadmap"
+    allowfullscreen>
+    </iframe>
+    </div>
+</div>
+
 <h2>Sustainability Scale:</h2>
 <div class="sustainability-scale">{{ data['sustainability_scale'] }}</div>
 
 <h2>Solar Energy Analysis:</h2>
-<div class="energy-analysis" id="solar-energy-analysis"></div>
+<div class="energy-analysis" id="solar-energy-analysis">
+    <div id="solar-graph"></div>
+    <script>
+        var solarData = [{ y: {{ data['solar']|tojson }}, type: "bar" }];
+
+        var solarLayout = {
+            title: "Solar Energy Analysis",
+            xaxis: {
+                tickvals: [0,1,2,3,4,5,6,7,8,9,10,11,12],
+                ticktext: ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+            }
+        };
+
+        Plotly.newPlot("solar-graph", solarData, solarLayout, { displaylogo: false });
+    </script>
+</div>
 
 <h2>Wind Energy Analysis:</h2>
-<div class="energy-analysis" id="wind-energy-analysis"></div>
+<div class="energy-analysis" id="wind-energy-analysis">
+    <div id="wind-graph"></div>
+    <script>
+        var C = {{ data['wind'] }};
+        
+        var xValues = Array.from({length: 12}, (_, i) => i);
+        var intersectionPoint = Math.ceil((1 / C) * Math.log(1 + 1));  // Calculate intersection point
+    
+        var y1Values = xValues.map(x => (1 / C) * Math.log(x + 1));  // Avoid log(0)
+        var y2Values = xValues.map(x => (1 / C) * x);
+    
+        var windTrace1 = {
+            x: xValues,
+            y: y1Values,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Wind'
+        };
+    
+        var windTrace2 = {
+            x: xValues,
+            y: y2Values,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Non-Renewable Energy'
+        };
+    
+        var windLayout = {
+            title: 'Wind Energy Analysis',
+            xaxis: {
+                tickvals: xValues,
+                ticktext: xValues.map(val => (val + intersectionPoint) % 12 + 1) // Adjust ticks based on intersection point
+            }   
+        };
+    
+        var windData = [windTrace1, windTrace2];
+    
+        Plotly.newPlot('wind-graph', windData, windLayout, {displaylogo: false});
+    </script>
+    
+</div>
+
 
 <h2>Air Quality Index:</h2>
 <p class="{{ 'unsafe-air-quality' if data['air_quality_index'] > 100 else '' }}">
     {{ data['air_quality_index'] }}
 </p>
 
-<h2>Issues:</h2>
+<h2>Warnings:</h2>
 <ul>
-    {% for issue in data['issues'] %}
-    <li>{{ issue }}</li>
-    {% endfor %}
+    {% if data['near_water'] %}
+    <li>Water body nearby</li>
+    {% else %}
+    <li>No warnings detected</li>
+    {% endif %}
 </ul>
 
 <script>
@@ -78,10 +152,6 @@ Solar Energy Analysis
 Wind Energy Analysis
 Air Quality Index
 -->
-
-<div id="graph"></div>
-<script src="{{ url_for('static', filename='your_script.js') }}"></script>
-
 
 <div class="title-text"
      style="display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center;">

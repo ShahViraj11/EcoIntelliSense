@@ -1,7 +1,6 @@
 import requests
 from datetime import datetime, timedelta
 import pytz
-import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import pysolar
 
@@ -300,7 +299,4 @@ print(f"Elevation: {elevation} meters")
 
 '''
 
-print(solar_data(38.573906, -122.681710))
-
-print(solar_data(61.391720, -156.176455))
-
+print(average_temp_and_wind(40.7128, -74.0060))
