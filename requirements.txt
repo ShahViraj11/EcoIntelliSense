@@ -1,4 +1,6 @@
+appnope
 asttokens
+async-timeout
 attrs
 Authlib
 basemap
@@ -7,6 +9,7 @@ blinker
 cachetools
 certifi
 cffi
+chardet
 charset-normalizer
 click
 click-plugins
@@ -19,6 +22,7 @@ cycler
 debugpy
 decorator
 dnspython
+exceptiongroup
 executing
 fiona
 Flask
@@ -39,6 +43,8 @@ googleapis-common-protos
 gunicorn
 httplib2
 idna
+importlib-metadata
+importlib-resources
 ipykernel
 ipython
 itsdangerous
@@ -61,11 +67,13 @@ OWSLib
 packaging
 pandas
 parso
-Pillow
+pexpect
+pillow
 platformdirs
 prompt-toolkit
 protobuf
 psutil
+ptyprocess
 pure-eval
 pyasn1
 pyasn1-modules
@@ -89,14 +97,14 @@ reportlab
 requests
 requests-toolbelt
 rsa
-setuptools
 shapely
 six
 stack-data
 tornado
 traitlets
+typing_extensions
 tzdata
 urllib3
-vboxapi
 wcwidth
 Werkzeug
+zipp
