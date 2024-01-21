@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime, timedelta
+import pytz
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import pysolar
@@ -15,7 +16,7 @@ onebuild_api = '1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU'
 
 
 def average_temp_and_wind(lat,lon,start_month= datetime.now().month,end_month=datetime.now().month):
-    current_year = datetime.datetime.now()
+    current_year = datetime.now()
     current_year = current_year.year - 1
 
     start_year = current_year - 1 if start_month > end_month else current_year
@@ -144,22 +145,25 @@ def get_solar_insights(latitude, longitude,api=google_maps_api_key):
 
     return data
 
+def solar_data(lat, lon, area=6):
+    start = datetime(20, 1, 1, 8, 0, 0, 0, tzinfo=pytz.utc)
 
+    monthly_averages = [0] * 12
+    monthly_counts = [0] * 12
 
-def solar_data(lat,lon):
-    start = datetime.datetime(2018, 1, 1, 8, 0, 0, 0, tzinfo=datetime.timezone.utc)
-
-    solar_data = []
-    for i in range(0, 6*90, 1):
-        date = start + datetime.timedelta(hours=-i)
+    for i in range(0, 365 * 24, 1):
+        date = start + timedelta(hours=-i)
+        month = date.month - 1  # Adjust month to be 0-indexed
         altitude_deg = pysolar.solar.get_altitude(lat, lon, date)
-        if altitude_deg <= 0:
-            radiation = 0.
-        else:
-            radiation = pysolar.radiation.get_radiation_direct(date, altitude_deg)
-        solar_data.append(radiation)
-    return solar_data
+        
+        if altitude_deg > 0:
+            radiation = (area * pysolar.radiation.get_radiation_direct(date, altitude_deg) / 1000) * 72
+            monthly_averages[month] += radiation
+            monthly_counts[month] += 1
 
+    monthly_averages = [avg / count if count > 0 else 0 for avg, count in zip(monthly_averages, monthly_counts)]
+    
+    return monthly_averages
 
 def pollution_data(latitude, longitude,api=google_maps_api_key):  
     startTime = (datetime.now() - timedelta(days=15)).isoformat() 
@@ -293,6 +297,10 @@ print(sum/len(pollution_data))
 
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
+
 '''
 
-print(get_solar_insights(35.590319,-104.241844)['solarPotential']["solarPanelConfigs"][0]['roofSegmentSummaries'][0]['yearlyEnergyDcKwh'])
+print(solar_data(38.573906, -122.681710))
+
+print(solar_data(61.391720, -156.176455))
+

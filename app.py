@@ -138,9 +138,14 @@ def report():
     data['labor_cost'] = backendfunctions.query_1build_construction_costs(db_data['project_coordinates'][0], db_data['project_coordinates'][1])               
     data['area'] = db_data['project_size']
     data['elevation'] = round(backendfunctions.check_mountainous_region(db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
-    data['solar'] = backendfunctions.solar_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
+    data['solar'],data['solar_uptime'] = backendfunctions.solar_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['sustainability_scale'] = backendfunctions.sustainability_score(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
-    data['air_quality_index'] = 45
+    pollution_data = backendfunctions.pollution_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
+    sum = 0
+    for i in range(len(pollution_data)):
+        sum += pollution_data[i]['hoursInfo'][0]['indexes'][0]['aqi']
+    data['air_quality_index'] = round(sum/len(pollution_data),2)
+    
     return render_template('ReportDraft.html', data=data)
 
 if __name__ == '__main__':
