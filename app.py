@@ -1,11 +1,8 @@
 import json
 from urllib.parse import quote_plus, urlencode
-
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, session, url_for, request
-
 import apikeys
-
 import redis
 from redis.commands.json.path import Path
 import redis.commands.search.aggregation as aggregations
@@ -13,6 +10,8 @@ import redis.commands.search.reducers as reducers
 from redis.commands.search.field import TextField, NumericField, TagField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import NumericFilter, Query
+
+from BackendFunctions import backendfunctions
 
 r = redis.StrictRedis(
   host='redis-19241.c1.us-central1-2.gce.cloud.redislabs.com',
@@ -76,7 +75,7 @@ def projects():
     get_project_names(session.get("user"))
     return render_template('currentprojects.html',
                     session=session.get("user"),
-                    pretty=json.dumps(session.get("user"), indent=4))
+                    usrid=session.get("user")["userinfo"]["email"])
 
 @app.route("/newproject", methods=["GET", "POST"])
 def newproject():
@@ -110,11 +109,9 @@ def submit():
     if request.method == "POST":
         request.form
         project_name = request.form.get('projectname')
-        project_location = request.form.get('projectlocation')
+        project_location = backendfunctions.geocode_address(request.form.get('projectlocation'), apikeys.google_maps_api_key)
         project_size = request.form.get('projectsize')
-        
         add_project(session.get("user")["userinfo"]["email"], project_name, {'project_location': project_location, 'project_size': project_size})
-        
         return f"Project Name: {project_name}, Project Location: {project_location}, Project Size: {project_size} sq meters"
 
 if __name__ == '__main__':

@@ -102,16 +102,40 @@ def water_check(original_lat, original_lon):
     return water_check
 
     
+def geocode_address(address, api_key):
+    base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+    params = {
+        'address': address,
+        'key': api_key
+    }
+
+    response = requests.get(base_url, params=params)
+    result = response.json()
+
+    if result['status'] == 'OK':
+        location = result['results'][0]['geometry']['location']
+        latitude = location['lat']
+        longitude = location['lng']
+        return latitude, longitude
+    else:
+        print(f"Geocoding failed. Status: {result['status']}")
+        return None
 
 
 
 
-
+'''
 latitude = 37.7749
 longitude = -122.4194
 api_key = apikeys.google_maps_api_key
 
 
+address_to_geocode = "1600 Amphitheatre Parkway, Mountain View, CA"
+coordinates = geocode_address(address_to_geocode, api_key)
+print(f"Coordinates for {address_to_geocode}: {coordinates}")
+'''
+
+'''
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
 
@@ -120,6 +144,7 @@ print(solar_data)
 
 pollution_data = pollution_data(api_key, latitude, longitude)
 print(pollution_data)
+'''
 
 
 
