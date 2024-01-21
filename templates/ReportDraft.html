@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-      <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./ReportDraftStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ReportDraftStyle.css') }}">
 </head>
 <body>
 
 <div class="header">
-    <img src="/images/logo.png" alt="Logo" class="logo">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
     <span class="logo-text">EcoIntelliSense</span>
     <h1>Sustainability Dashboard</h1>
 </div>
@@ -32,17 +32,8 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
 <h2>Sustainability Scale:</h2>
-<div class="sustainability-scale">{{ data.sustainability_scale }}</div>
+<div class="sustainability-scale">{{ data['sustainability_scale'] }}</div>
 
 <h2>Solar Energy Analysis:</h2>
 <div class="energy-analysis" id="solar-energy-analysis"></div>
@@ -51,16 +42,20 @@
 <div class="energy-analysis" id="wind-energy-analysis"></div>
 
 <h2>Air Quality Index:</h2>
-<p class="{{ 'unsafe-air-quality' if data.air_quality_index > safe_limit else '' }}">
-    {{ data.air_quality_index }}
+<p class="{{ 'unsafe-air-quality' if data.air_quality_index > 100 else '' }}">
+    {{ data['air_quality_index'] }}
 </p>
 
 <h2>Issues:</h2>
 <ul>
-    {% for issue in data.issues %}
+    {% for issue in data['issues'] %}
     <li>{{ issue }}</li>
     {% endfor %}
 </ul>
+
+<h2>Matplotlib Graph:</h2>
+<img src="data:image/png;base64,{{ plot_image }}" alt="Matplotlib Graph">
+
 
 <script>
     // Add your JavaScript here for rendering graphs
