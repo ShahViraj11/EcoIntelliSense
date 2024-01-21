@@ -71,11 +71,3 @@ h1 {
           margin-left: 5px;
           font-size: 22px;
         }
-
-        .data-item {
-    border: 2px solid #000; /* Border style, adjust color and width as needed */
-            width: 80%;
-    padding-top: 60px; /* Adjust padding as needed */
-          padding-bottom: 60px;
-    display: inline-block; /* Ensure the rectangle only takes the width of the content */
-}
