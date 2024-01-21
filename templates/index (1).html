@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>EcoIntelli - A hope for future</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.ico') }}">
 
 
 <!-- partial:index.partial.html -->
@@ -55,60 +56,52 @@
 
 
     <figure class="carousel">
-        <img src="{{ url_for('static', filename='images/slideshow/slide1.jpg') }}" alt="" class="blizer" />
+    <img src="{{ url_for('static', filename='images/slideshow/slide1.jpg') }}" alt="" class="blizer" />
     <div class="centered">EcoIntelliSense</div>
-        <div class="para">AI-Driven Environmental Impact Analyzer</div>
-        <p> < AI-Driven Environmental Impact Analyzer </p>
-    </figure>
+    <div class="para">AI-Driven Environmental Impact Analyzer</div>
+    <p> < AI-Driven Environmental Impact Analyzer </p>
+</figure>
+
 
 
 </header>
 
 <!--MAIN-->
 <main>
-    <!--DIVISION_1-->
+   <!--DIVISION_1-->
     <div class="divisions division_1">
         <article class="padding_3x">
-            <h1 class="title medium">Eco. Intelli. Sense.</h1>
-            <p> A forward-thinking, Balearic-based residential real estate developer operating in prime locations across the islands of Mallorca and Ibiza. Committed to driving progress and commercial success, we focus on delivering results via meticulous development strategies that maximize each project's potential.</p>
+            <h1 class="title medium">About Us</h1>
+            <p> Empowering companies to attain their optimal eco-friendly solutions, our platform utilizes comprehensive big data and generated reports to assist in informed decision-making. </p>
         </article>
     </div>
 
     <!--DIVISION_2-->
     <div class="divisions division_2 padding_2x">
         <section class="title_header padding_1x">
-            <h1 class="title medium">Whether you're interested</h1>
+            <h1 class="title medium">What we do?</h1>
             <span class="bar"></span>
         </section>
+
         <section class="cards flex padding_1x">
+
             <article class="fixed_flex card padding_1x">
                 <iconify-icon icon="la:donate"></iconify-icon>
-                <h3 class="small">INVEST WITH US:&#160&#160</h3>
-                <span class="count">215</span> Billion
+                Global Renewable Capacity Expected to reach
+                <span class="count"> <b>&#160 7300 &#160</b></span> GW by 2028
+
             </article>
+
+
             <article class="fixed_flex card padding_1x">
                 <iconify-icon icon="carbon:collaborate"></iconify-icon>
-                <h3 class="small">INVEST WITH US:&#160&#160</h3>
-                <span class="count">3600000</span>
+                Solar PV & wind power accounting for
+                <span class="count"><b>&#160 95</b></span>
+                % of global renewable expansion
             </article>
-            <article class="fixed_flex card padding_1x">
-                <iconify-icon icon="bi:house"></iconify-icon>
-                <h3 class="small">INVEST WITH US:&#160&#160</h3>
-                <span class="count">1400000000</span>
-            </article>
-            <article class="fixed_flex card padding_1x">
-                <iconify-icon icon="mdi:frequently-asked-questions"></iconify-icon>
-                <h3 class="small">INVEST WITH US:&#160&#160</h3>
-                <span class="count">60</span> Billion
-            </article>
+
         </section>
     </div>
-
-
-
-
-
-
 
     <section id="features">
     <!-- Feature Box 1: Sustainable Construction Practices -->
@@ -173,7 +166,7 @@
  <div class="testimonial-row">
   <div class="testimonial-col">
         <div class="user">
-          <img src="/images/environmentalist1.jpeg" alt="">
+          <img src="{{ url_for('static', filename='images/environmentalist1.jpeg') }}" alt="">
           <div class="user-info">
             <h4>Lady Bird Johnson <i class="fa fa-twitter" ></i></h4>
             <small>@LadyBirdJohnson</small>
@@ -184,7 +177,7 @@
      </div>
        <div class="testimonial-col">
          <div class="user">
-          <img src="/images/environmentalist2.jpeg" alt="">
+          <img src="{{ url_for('static', filename='images/environmentalist2.jpeg') }}" alt="">
           <div class="user-info">
             <h4>John Paul II <i class="fa fa-twitter" ></i></h4>
             <small>@JohnPaulII</small>
@@ -198,7 +191,7 @@
        <div class="testimonial-col">
 
           <div class="user">
-          <img src="/images/environmentalist3.jpeg" alt="">
+          <img src="{{ url_for('static', filename='images/environmentalist3.jpeg') }}" alt="">
           <div class="user-info">
             <h4>John Ruskin <i class="fa fa-twitter" ></i></h4>
             <small>@JohnRuskin</small>
@@ -277,7 +270,7 @@
     </aside>
 </footer>
 <!-- partial -->
-  <script  src="./script.js"></script>
+  <script  src="../static/script.js"></script>
 
 </body>
 </html>
