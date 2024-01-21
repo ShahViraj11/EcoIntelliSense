@@ -1,153 +1,79 @@
 body {
-  background: #f3f0e6; /* White background */
+  background: #f3f0e6;
   font-family: 'El Messiri', sans-serif;
-  color: #333; /* Dark text for readability */
-  padding-top: 0; /* Added space at the top */
+  color: #333;
 }
 
 .header {
   display: flex;
   align-items: center;
-  padding-left: 160px; /* Adjust as needed */
-  background-color: #f3f0e6; /* Or any other color as per your design */
-  height: 100px; /* Adjust as needed */
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #f3f0e6;
+  height: 100px;
 }
-
 
 .logo-text {
-  font-size: 20px; /* Adjust as needed */
+  font-size: 24px;
   font-weight: bold;
-  color: #333; /* Adjust as needed */
-
+  color: #333;
 }
-
 
 .container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
-  background-color: #f5f5f5; /* Light background for the form area */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .logo {
-
-  position: relative;
-  margin-top: 7px; /* Remove margin-top or set it to 0 */
-  margin-left: -170px; /* Add this line to set margin-left to 0 */
   width: 120px;
   height: 85px;
-  padding: 0;
-  margin-right: -20px; /* Spacing between logo and text */
 }
 
-
-
 h1 {
-
-  text-align: center;
-  color: #2e7d32; /* Dark green color for the title */
+  font-size: 36px;
+  color: #2e7d32;
   margin-bottom: 20px;
-  padding: 250px;
-  font-size: 48px;
+  text-align: center;
 }
 
 .column {
   float: left;
-  width: 35%;
-  text-align: left;
-  padding-left: 200px;
-
-
+  width: 45%;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
-/* Clear floats after the columns */
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
-
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #2e7d32; /* Green color for labels */
-}
-
-input[type="text"],
-input[type="number"],
-textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #4caf50; /* Green border */
-  border-radius: 4px;
-  background: #fff; /* White background for inputs */
-  color: #333; /* Dark text for readability */
-  font-size: 16px;
-  box-sizing: border-box; /* Include padding and border in the element's width and height */
-}
-
-.form-group {
-  margin-bottom: 20px;
-  padding: 0 15px; /* Adjust this padding as needed */
-}
-
-
-input[readonly] {
-  background-color: #e8f5e9; /* Light green background */
-}
-
-/*textarea {*/
-/*  resize: vertical;*/
-/*}*/
-
-button {
-  background: #4caf50; /* Green background for the button */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-button:hover {
-  background-color: #388e3c; /* Darker green on hover */
-}
-
-#footer{
-  background:  #e4e1e1;
-  padding: 10px 0 20px;
-}
-
-.footer-row{
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-
-.footer-img{
-  position: absolute;
-  left: 35%;
-  opacity: 0.3;
-  width: 370px;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .energy-analysis {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 #map {
   height: 400px;
   width: 80%;
+  margin: 20px auto;
+}
+
+.footer-img {
+  position: relative;
+  opacity: 0.3;
+  width: 100%;
+  max-width: 370px;
+  margin: 20px auto;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: #e4e1e1;
 }
