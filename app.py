@@ -2,7 +2,6 @@ import json
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, session, url_for, request
-import apikeys
 import redis
 from redis.commands.json.path import Path
 import redis.commands.search.aggregation as aggregations
@@ -10,13 +9,23 @@ import redis.commands.search.reducers as reducers
 from redis.commands.search.field import TextField, NumericField, TagField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 from redis.commands.search.query import NumericFilter, Query
+import backendfunctions
 
-from BackendFunctions import backendfunctions
+
+google_maps_api_key = 'AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg'
+
+redis_password = 'EgORtEAym4obVur32FdT5qnBwi6QKAsK'
+
+autho_domain = 'dev-oye6y425565bfb2p.us.auth0.com'
+autho_client_id = 'JOsSt09A4sbeFTqq1U6DVIw6eRdyDbIp'
+autho_client_secret = '3ONItRFS8Wf9w_w2_Nzu2H5zGNWelMz6E9ci1v_zw-srCFgbOcobWP_l8GGoEA26'
+
+onebuild_api = '1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU'
 
 r = redis.StrictRedis(
   host='redis-19241.c1.us-central1-2.gce.cloud.redislabs.com',
   port=19241,
-  password=apikeys.redis_password,)
+  password=redis_password,)
 
 def add_project(user_id, project_name, project_info):
     # Convert project_info to JSON for storage
@@ -45,17 +54,17 @@ def get_project_names(user_id):
 
 
 app = Flask(__name__)
-app.secret_key = apikeys.autho_client_secret
+app.secret_key = autho_client_secret
 oauth = OAuth(app)
 
 oauth.register(
     "auth0",
-    client_id=apikeys.autho_client_id,
-    client_secret=apikeys.autho_client_secret,
+    client_id=autho_client_id,
+    client_secret=autho_client_secret,
     client_kwargs={
         "scope": "openid profile email",
     },
-    server_metadata_url=f'https://{apikeys.autho_domain}/.well-known/openid-configuration',
+    server_metadata_url=f'https://{autho_domain}/.well-known/openid-configuration',
 )
 
 @app.route('/')
@@ -93,12 +102,12 @@ def logout():
     session.clear()
     return redirect(
         "https://"
-        + apikeys.autho_domain
+        + autho_domain
         + "/v2/logout?"
         + urlencode(
             {
                 "returnTo": url_for("hello", _external=True),
-                "client_id": apikeys.autho_client_id,
+                "client_id": autho_client_id,
             },
             quote_via=quote_plus,
         )
@@ -110,7 +119,7 @@ def submit():
         request.form
         project_name = request.form.get('projectname')
         project_street_location = request.form.get('projectlocation')
-        project_coordinates = backendfunctions.geocode_address(project_street_location, apikeys.google_maps_api_key)
+        project_coordinates = backendfunctions.geocode_address(project_street_location, google_maps_api_key)
         project_size = request.form.get('projectsize')
         add_project(session.get("user")["userinfo"]["email"], project_name, {'project_street': project_street_location,
                                                                              'project_coordinates': project_coordinates,
@@ -128,7 +137,7 @@ def report():
     data['near_water'] = backendfunctions.water_check(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['labor_cost'] = backendfunctions.query_1build_construction_costs(db_data['project_coordinates'][0], db_data['project_coordinates'][1])               
     data['area'] = db_data['project_size']
-    data['elevation'] = round(backendfunctions.check_mountainous_region(apikeys.google_maps_api_key, db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
+    data['elevation'] = round(backendfunctions.check_mountainous_region(google_maps_api_key, db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
 
     data['sustainability_scale'] = 64
     data['air_quality_index'] = 45

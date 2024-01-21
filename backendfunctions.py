@@ -2,7 +2,18 @@ import requests
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
-import apikeys
+
+google_maps_api_key = 'AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg'
+
+redis_password = 'EgORtEAym4obVur32FdT5qnBwi6QKAsK'
+
+autho_domain = 'dev-oye6y425565bfb2p.us.auth0.com'
+autho_client_id = 'JOsSt09A4sbeFTqq1U6DVIw6eRdyDbIp'
+autho_client_secret = '3ONItRFS8Wf9w_w2_Nzu2H5zGNWelMz6E9ci1v_zw-srCFgbOcobWP_l8GGoEA26'
+
+onebuild_api = '1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU'
+
+
 
 def average_temp_and_wind(lat,lon,start_month= datetime.now().month,end_month=datetime.now().month):
     current_year = datetime.datetime.now()
@@ -33,7 +44,7 @@ def average_temp_and_wind(lat,lon,start_month= datetime.now().month,end_month=da
 
     return average_temp,average_wind_speed
 
-def query_1build_construction_costs(lat,lng,api_key = apikeys.onebuild_api):
+def query_1build_construction_costs(lat,lng,api_key = onebuild_api):
     url = "https://gateway-external.1build.com/"
     headers = {
         "Content-Type": "application/json",
@@ -249,7 +260,7 @@ def sustainability_score(latitude,longitude):
 
 latitude = 37.7749
 longitude = -122.4194
-api_key = apikeys.google_maps_api_key
+api_key = google_maps_api_key
 
 solar_data = get_solar_insights(api_key, latitude, longitude)
 print(solar_data)
