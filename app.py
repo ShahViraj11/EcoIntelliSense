@@ -108,9 +108,13 @@ def logout():
 @app.route('/submit', methods=['GET','POST'])
 def submit():
     if request.method == "POST":
-        project_name = request.form['projectname']
-        project_location = request.form['projectlocation']
-        project_size = request.form['projectsize']
+        request.form
+        project_name = request.form.get('projectname')
+        project_location = request.form.get('projectlocation')
+        project_size = request.form.get('projectsize')
+        
+        add_project(session.get("user"), project_name, {'project_location': project_location, 'project_size': project_size})
+        
         return f"Project Name: {project_name}, Project Location: {project_location}, Project Size: {project_size} sq meters"
 
 if __name__ == '__main__':
