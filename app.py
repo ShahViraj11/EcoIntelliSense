@@ -72,9 +72,10 @@ def callback():
 
 @app.route("/projects", methods=["GET", "POST"])
 def projects():
-    user_projects = get_project_names(session.get("user")["userinfo"]["email"])    
+    user_projects = get_project_names(session.get("user")["userinfo"]["email"])  
+    print(user_projects) 
     return render_template('currentprojects.html',
-                    project_list = user_projects)
+                    data_list = user_projects)
 
 @app.route("/newproject", methods=["GET", "POST"])
 def newproject():
@@ -108,18 +109,23 @@ def submit():
     if request.method == "POST":
         request.form
         project_name = request.form.get('projectname')
-        project_location = backendfunctions.geocode_address(request.form.get('projectlocation'), apikeys.google_maps_api_key)
+        project_street_location = request.form.get('projectlocation')
+        project_coordinates = backendfunctions.geocode_address(project_street_location, apikeys.google_maps_api_key)
         project_size = request.form.get('projectsize')
-        add_project(session.get("user")["userinfo"]["email"], project_name, {'project_location': project_location, 'project_size': project_size})
-        #return redirect(url_for('report', project_name=project_name))
-        return redirect(url_for('projects'))
+        add_project(session.get("user")["userinfo"]["email"], project_name, {'project_street': project_street_location,
+                                                                             'project_coordinates': project_coordinates,
+                                                                             'project_size': project_size})
+        return redirect(url_for('report', curr_proj=str(project_name)))
         
 @app.route('/report', methods=['GET','POST'])
 def report():
-    # data = get_project_info(session.get("user")["userinfo"]["email"], request.args.get('projectname'))
+    proj_name = request.args.get('curr_proj')  
+    db_data = get_project_info(session.get("user")["userinfo"]["email"], proj_name)
+    
     data = dict()
-    data['location'] = "1234 Main St, San Francisco, CA 94123"
-    data['near_water'] = True
+    data['location'] = db_data['project_street']
+    data['coordinates'] = db_data['project_coordinates']
+    data['near_water'] = backendfunctions.water_check(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['completion_rate'] = 0.5
     data['labor_cost'] = 100000               
     data['area'] = 100
@@ -127,6 +133,7 @@ def report():
     data['budget_used'] = 3400
     data['extra_material_cost'] = 2100
     data['sustainability_scale'] = 64
+    data['air_quality_index'] = 45
     return render_template('ReportDraft.html', data=data)
 
 if __name__ == '__main__':

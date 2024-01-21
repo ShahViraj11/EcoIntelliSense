@@ -96,8 +96,6 @@ def water_check(original_lat, original_lon):
         x, y = m(lon, lat)
         m.plot(x, y, 'ro', markersize=10)
 
-    plt.title("Map with Coordinate")
-    plt.show()
 
     return water_check
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='ReportDraftStyle.css') }}">
 </head>
@@ -42,7 +43,7 @@
 <div class="energy-analysis" id="wind-energy-analysis"></div>
 
 <h2>Air Quality Index:</h2>
-<p class="{{ 'unsafe-air-quality' if data.air_quality_index > 100 else '' }}">
+<p class="{{ 'unsafe-air-quality' if data['air_quality_index'] > 100 else '' }}">
     {{ data['air_quality_index'] }}
 </p>
 
@@ -52,10 +53,6 @@
     <li>{{ issue }}</li>
     {% endfor %}
 </ul>
-
-<h2>Matplotlib Graph:</h2>
-<img src="data:image/png;base64,{{ plot_image }}" alt="Matplotlib Graph">
-
 
 <script>
     // Add your JavaScript here for rendering graphs
@@ -81,6 +78,10 @@ Solar Energy Analysis
 Wind Energy Analysis
 Air Quality Index
 -->
+
+<div id="graph"></div>
+<script src="{{ url_for('static', filename='your_script.js') }}"></script>
+
 
 <div class="title-text"
      style="display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center;">

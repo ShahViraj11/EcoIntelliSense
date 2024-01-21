@@ -48,5 +48,5 @@ project_info1 = {"description": "This is project 1", "status": "ongoing"}
 # add_project(user_id, project_name1, project_info1)
 
 # Retrieve project information
-retrieved_info1 = get_project_info("virajshah@gmail.com", "New Penthouse")
+retrieved_info1 = get_project_info("virajshah@gmail.com", "Pool")
 print("Retrieved Project 1 Info:", retrieved_info1)
