@@ -137,9 +137,9 @@ def report():
     data['near_water'] = backendfunctions.water_check(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['labor_cost'] = backendfunctions.query_1build_construction_costs(db_data['project_coordinates'][0], db_data['project_coordinates'][1])               
     data['area'] = db_data['project_size']
-    data['elevation'] = round(backendfunctions.check_mountainous_region(google_maps_api_key, db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
-
-    data['sustainability_scale'] = 64
+    data['elevation'] = round(backendfunctions.check_mountainous_region(db_data['project_coordinates'][0], db_data['project_coordinates'][1]),2)
+    data['solar'] = backendfunctions.solar_data(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
+    data['sustainability_scale'] = backendfunctions.sustainability_score(db_data['project_coordinates'][0], db_data['project_coordinates'][1])
     data['air_quality_index'] = 45
     return render_template('ReportDraft.html', data=data)
 

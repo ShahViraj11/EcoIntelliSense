@@ -2,15 +2,14 @@ import requests
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+import pysolar
+
 
 google_maps_api_key = 'AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg'
-
 redis_password = 'EgORtEAym4obVur32FdT5qnBwi6QKAsK'
-
 autho_domain = 'dev-oye6y425565bfb2p.us.auth0.com'
 autho_client_id = 'JOsSt09A4sbeFTqq1U6DVIw6eRdyDbIp'
 autho_client_secret = '3ONItRFS8Wf9w_w2_Nzu2H5zGNWelMz6E9ci1v_zw-srCFgbOcobWP_l8GGoEA26'
-
 onebuild_api = '1build_ext.zo7ujfZa.e4ttcYOIKFi6Sy7t2FBLQy0F7L0ZrKrU'
 
 
@@ -118,7 +117,7 @@ def query_1build_construction_costs(lat,lng,api_key = onebuild_api):
 
     return results
 
-def check_mountainous_region(api_key, latitude, longitude):
+def check_mountainous_region(latitude, longitude, api_key=google_maps_api_key):
     """Checks if a region is mountainous based on elevation data."""
     
     endpoint = "https://maps.googleapis.com/maps/api/elevation/json"
@@ -136,8 +135,8 @@ def check_mountainous_region(api_key, latitude, longitude):
         return None
 
 
-def get_solar_insights(api_key, latitude, longitude):
-    endpoint = f"https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude={latitude}&location.longitude={longitude}&requiredQuality=HIGH&key={api_key}"
+def get_solar_insights(latitude, longitude,api=google_maps_api_key):
+    endpoint = f"https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude={latitude}&location.longitude={longitude}&requiredQuality=HIGH&key={api}"
 
     response = requests.get(endpoint)
     # https://developers.google.com/maps/documentation/solar/building-insights#example_response_object
@@ -146,7 +145,23 @@ def get_solar_insights(api_key, latitude, longitude):
     return data
 
 
-def pollution_data(api, latitude, longitude):  
+
+def solar_data(lat,lon):
+    start = datetime.datetime(2018, 1, 1, 8, 0, 0, 0, tzinfo=datetime.timezone.utc)
+
+    solar_data = []
+    for i in range(0, 6*90, 1):
+        date = start + datetime.timedelta(hours=-i)
+        altitude_deg = pysolar.solar.get_altitude(lat, lon, date)
+        if altitude_deg <= 0:
+            radiation = 0.
+        else:
+            radiation = pysolar.radiation.get_radiation_direct(date, altitude_deg)
+        solar_data.append(radiation)
+    return solar_data
+
+
+def pollution_data(latitude, longitude,api=google_maps_api_key):  
     startTime = (datetime.now() - timedelta(days=15)).isoformat() 
     endTime = (datetime.now() - timedelta(days=1)).isoformat()
     
@@ -214,7 +229,7 @@ def water_check(original_lat, original_lon):
     return water_check
 
     
-def geocode_address(address, api_key):
+def geocode_address(address, api_key=google_maps_api_key):
     base_url = "https://maps.googleapis.com/maps/api/geocode/json"
     params = {
         'address': address,
@@ -235,9 +250,17 @@ def geocode_address(address, api_key):
 
 def sustainability_score(latitude,longitude):
     data = dict()
-    data['solar'] = 0
-    data['water_check'] = 0
-    data['pollution'] = 0
+    data['solar'] = True
+
+    data['water_check'] = water_check(latitude, longitude)
+    
+    pollution_list = pollution_data(latitude, longitude)
+    sum = 0
+    for i in range(len(pollution_list)):
+        sum += pollution_list[i]['hoursInfo'][0]['indexes'][0]['aqi']
+
+    data['pollution'] = sum/len(pollution_list)
+
     
     score = 75
     if data['solar']:
@@ -252,34 +275,24 @@ def sustainability_score(latitude,longitude):
         pollution_num += 30
     
     return score
-# solar and water_check are boolean vals
-# pollution is average pollution over x amount of days
 
 
-
-
-latitude = 37.7749
-longitude = -122.4194
-api_key = google_maps_api_key
-
-solar_data = get_solar_insights(api_key, latitude, longitude)
-print(solar_data)
 
 '''
 address_to_geocode = "1600 Amphitheatre Parkway, Mountain View, CA"
 coordinates = geocode_address(address_to_geocode, api_key)
 print(f"Coordinates for {address_to_geocode}: {coordinates}")
-'''
 
-'''
+#pollution_data[0]['hoursInfo'][0]['indexes'][0]['dominantPollutant']
+pollution_data = pollution_data(latitude, longitude)
+sum = 0
+for i in range(len(pollution_data)):
+    sum += pollution_data[i]['hoursInfo'][0]['indexes'][0]['aqi']
+
+print(sum/len(pollution_data))
+
 elevation = check_mountainous_region(api_key, latitude, longitude)
 print(f"Elevation: {elevation} meters")
-
-
-
-pollution_data = pollution_data(api_key, latitude, longitude)
-print(pollution_data)
 '''
 
-
-
+print(get_solar_insights(35.590319,-104.241844)['solarPotential']["solarPanelConfigs"][0]['roofSegmentSummaries'][0]['yearlyEnergyDcKwh'])
