@@ -17,21 +17,21 @@
 </div>
 
 
-  {% if project_list %}
+  <a href="{{ url_for('newproject') }}">
+    <button>Add Project</button>
+  </a>
+
+  {% if data_list %}
     <ol>
-      {% for item in project_list %}
+      {% for item in data_list %}
         <li>
-          <div>{{ item }}</div>
+          <div class="data-item">{{ item }}</div>
         </li>
       {% endfor %}
     </ol>
   {% else %}
     <p>No data available.</p>
   {% endif %}
-
-<a href="{{ url_for('newproject') }}">
-  <button>Add Project</button>
-</a>
 
 </body>
 </html>
