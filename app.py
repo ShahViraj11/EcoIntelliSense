@@ -111,8 +111,9 @@ def submit():
         project_location = backendfunctions.geocode_address(request.form.get('projectlocation'), apikeys.google_maps_api_key)
         project_size = request.form.get('projectsize')
         add_project(session.get("user")["userinfo"]["email"], project_name, {'project_location': project_location, 'project_size': project_size})
-        return redirect(url_for('report', project_name=project_name))
-
+        #return redirect(url_for('report', project_name=project_name))
+        return redirect(url_for('projects'))
+        
 @app.route('/report', methods=['GET','POST'])
 def report():
     # data = get_project_info(session.get("user")["userinfo"]["email"], request.args.get('projectname'))
