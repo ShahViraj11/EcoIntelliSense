@@ -16,17 +16,17 @@
 
 <div class="row">
   <div class="column">
-      <p><b><u>Location:</u></b> {{ data.location }}</p>
-      <p><b><u>Near Water:</u></b> {{ 'Yes' if data.near_water else 'No' }}</p>
-      <p><b><u>Completion Rate:</u></b> {{ data.completion_rate }}%</p>
-      <p><b><u>Labor and Cost:</u></b> ${{ data.labor_cost }}</p>
+      <p><b><u>Location:</u></b> {{ data['location'] }}</p>
+      <p><b><u>Near Water:</u></b> {{ 'Yes' if data['near_water'] else 'No' }}</p>
+      <p><b><u>Completion Rate:</u></b> {{ data['completion_rate'] }}%</p>
+      <p><b><u>Labor and Cost:</u></b> ${{ data['labor_cost'] }}</p>
   </div>
 
   <div class="column">
-      <p><b><u>Area:</u></b> {{ data.area }} m<sup>2</sup></p>
-      <p><b><u>Elevation:</u></b> {{ data.elevation }} m</p>
-      <p><b><u>Budget Used:</u></b> ${{ data.budget_used }}</p>
-      <p><b><u>Cost of Extra Materials per Cubic Yard:</u></b> ${{ data.extra_material_cost }}</p>
+      <p><b><u>Area:</u></b> {{ data['area'] }} m<sup>2</sup></p>
+      <p><b><u>Elevation:</u></b> {{ data['elevation'] }} m</p>
+      <p><b><u>Budget Used:</u></b> ${{ data['budget_used'] }}</p>
+      <p><b><u>Cost of Extra Materials per Cubic Yard:</u></b> ${{ data['extra_material_cost'] }}</p>
   </div>
 
 </div>

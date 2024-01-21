@@ -6,12 +6,12 @@
     <title>Dynamic List with Jinja</title>
           <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./currentProjectsStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='currentProjectsStyle.css') }}">
 </head>
 <body>
 
 <div class="header">
-    <img src="/images/logo.png" alt="Logo" class="logo">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
     <span class="logo-text">EcoIntelliSense</span>
     <h1>Dynamic List</h1>
 </div>

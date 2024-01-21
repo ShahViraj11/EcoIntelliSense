@@ -115,8 +115,18 @@ def submit():
 
 @app.route('/report', methods=['GET','POST'])
 def report():
-    data = get_project_info(session.get("user")["userinfo"]["email"], request.args.get('projectname'))
-
+    # data = get_project_info(session.get("user")["userinfo"]["email"], request.args.get('projectname'))
+    data = dict()
+    data['location'] = "1234 Main St, San Francisco, CA 94123"
+    data['near_water'] = True
+    data['completion_rate'] = 0.5
+    data['labor_cost'] = 100000               
+    data['area'] = 100
+    data['elevation'] = 17
+    data['budget_used'] = 3400
+    data['extra_material_cost'] = 2100
+    data['sustainability_scale'] = 64
+    return render_template('ReportDraft.html', data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
