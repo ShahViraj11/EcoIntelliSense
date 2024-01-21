@@ -1,0 +1,71 @@
+body {
+  font-family: 'El Messiri', sans-serif;
+            color: #004225;
+  background-color: #f5f5dc;
+  padding-top: 0; /* Added space at the top */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding-left: 160px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+}
+
+
+.logo-text {
+  font-size: 20px; /* Adjust as needed */
+  font-weight: bold;
+  color: #333; /* Adjust as needed */
+
+}
+
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.logo {
+
+  position: relative;
+  margin-top: 7px; /* Remove margin-top or set it to 0 */
+  margin-left: -170px; /* Add this line to set margin-left to 0 */
+  width: 120px;
+  height: 85px;
+  padding: 0;
+  margin-right: -20px; /* Spacing between logo and text */
+}
+
+h1 {
+
+  text-align: center;
+  color: #2e7d32; /* Dark green color for the title */
+  margin-bottom: 20px;
+  padding: 360px;
+  font-size: 48px;
+}
+
+        button {
+            background-color: #008000; / Green background for the button /
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #006400; / Darker green on hover */
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
