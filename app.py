@@ -72,10 +72,9 @@ def callback():
 
 @app.route("/projects", methods=["GET", "POST"])
 def projects():
-    get_project_names(session.get("user"))
+    user_projects = get_project_names(session.get("user")["userinfo"]["email"])    
     return render_template('currentprojects.html',
-                    session=session.get("user"),
-                    usrid=session.get("user")["userinfo"]["email"])
+                    project_list = user_projects)
 
 @app.route("/newproject", methods=["GET", "POST"])
 def newproject():
@@ -112,7 +111,12 @@ def submit():
         project_location = backendfunctions.geocode_address(request.form.get('projectlocation'), apikeys.google_maps_api_key)
         project_size = request.form.get('projectsize')
         add_project(session.get("user")["userinfo"]["email"], project_name, {'project_location': project_location, 'project_size': project_size})
-        return f"Project Name: {project_name}, Project Location: {project_location}, Project Size: {project_size} sq meters"
+        return redirect(url_for('report', project_name=project_name))
+
+@app.route('/report', methods=['GET','POST'])
+def report():
+    data = get_project_info(session.get("user")["userinfo"]["email"], request.args.get('projectname'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
