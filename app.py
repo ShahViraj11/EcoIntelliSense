@@ -2,7 +2,7 @@ import json
 from urllib.parse import quote_plus, urlencode
 
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, session, url_for, request
 
 import apikeys
 
@@ -104,6 +104,14 @@ def logout():
             quote_via=quote_plus,
         )
     )
+    
+@app.route('/submit', methods=['GET','POST'])
+def submit():
+    if request.method == "POST":
+        project_name = request.form['projectname']
+        project_location = request.form['projectlocation']
+        project_size = request.form['projectsize']
+        return f"Project Name: {project_name}, Project Location: {project_location}, Project Size: {project_size} sq meters"
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

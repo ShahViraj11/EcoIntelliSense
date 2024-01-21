@@ -26,60 +26,28 @@
 
 <div class="container">
   <h1>Submit your project</h1>
-  <form>
+  <form action="{{ url_for("submit")}}" method="post">
     <div class="form-group">
-      <label for="project-name">Project Name:</label>
-      <input id="project-name" type="text" required autofocus placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+      <label>Project Name:</label>
+      <input id="projectname" type="text" required autofocus placeholder="Title of Project" style="border: 1px solid #ccc; padding: 8px;"/>
     </div>
 
     <div class="form-group">
-      <label for="company-name">Company Name:</label>
-      <input id="company-name" type="text" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+      <label>Project Location:</label>
+      <input id="projectlocation" type="text" required placeholder="Street Address" style="border: 1px solid #ccc; padding: 8px;"/>
     </div>
 
     <div class="form-group">
-      <label for="project-location">Project Location:</label>
-      <input id="project-location" type="text" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
+      <label>Project Size (sq meters):</label>
+      <input id="projectsize" type="number" required placeholder="Project Dimensions (Enter in Map Below)" style="border: 1px solid #ccc; padding: 8px;"/>
     </div>
 
     <div class="form-group">
-      <label for="project-size">Project Size (sq meters):</label>
-      <input id="project-size" type="number" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
-    </div>
-
-    <div class="form-group">
-      <label>Type of Construction:</label>
-      <input type="text" value="Residential" readonly style="border: 1px solid #ccc; padding: 8px;"/>
-    </div>
-
-    <div class="form-group">
-      <label>Sustainable Materials Used:</label>
-      <textarea rows="3" placeholder="e.g., Recycled Steel, Bamboo, Reclaimed Wood, Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Primary Energy Source:</label>
-      <input type="text" value="Traditional" readonly style="border: 1px solid #ccc; padding: 8px;"/>
-    </div>
-
-    <div class="form-group">
-      <label for="water-usage">Estimated Water Usage (liters):</label>
-      <input id="water-usage" type="number" required placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"/>
-    </div>
-
-    <div class="form-group">
-      <label for="waste-plan">Waste Management Plan:</label>
-      <textarea id="waste-plan" rows="3" placeholder="Lorem ipsum" style="border: 1px solid #ccc; padding: 8px;"></textarea>
-    </div>
-
-    <button type="submit">Submit Assessment</button>
-
-    <div class="form-group">
-      <label for="map">Select Project Area:</label>
+      <label>Select Project Area:</label>
       <div id="map" style="height: 400px;"></div>
     </div>
 
-    <!-- Rest of your form fields -->
+    <button type="submit">Submit Assessment</button>
   </form>
 </div>
 
