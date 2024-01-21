@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>Environmental Impact Assessment Form</title>
   <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&family=Cookie&family=Dancing+Script:wght@700&family=El+Messiri:wght@400;500&family=Fruktur&family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./2nd_page_style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='2nd_page_style.css') }}">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu9WmzWfQnxsqJhWLE8CTMlSYB0VRUrkg&libraries=places&callback=initMap" async defer></script>
   <style>
     .wide-input {
@@ -20,7 +20,7 @@
 <body>
 <!-- Other body content -->
 <div class="header">
-  <img src="/images/logo.png" alt="Logo" class="logo">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
   <span class="logo-text">EcoIntelliSense</span>
 </div>
 
